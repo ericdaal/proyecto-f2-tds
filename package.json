@@ -1,0 +1,16 @@
+{
+  "name": "decorous-category-risk-u4dws",
+  "productName": "decorous-category-risk-u4dws",
+  "description": "My Electron application description",
+  "keywords": [],
+  "main": "./main.js",
+  "version": "1.0.0",
+  "author": "Erick Alvarado",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "23.1.1"
+  }
+}
