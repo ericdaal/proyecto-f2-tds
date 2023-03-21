@@ -1,15 +1,14 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
-const {ipcMain} = require('electron')
+const {app, BrowserWindow, ipcMain} = require('electron')
 const path = require('path')
 
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 800,
-    height: 600,
+    height: 800,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(app.getAppPath(), 'preload.js')
     }
   })
 
@@ -20,23 +19,60 @@ function createWindow () {
   // mainWindow.webContents.openDevTools()
 }
 
-let segunda
+let listado
 function createWindowtwo () {
   // Create the browser window.
-  segunda = new BrowserWindow({
-    width: 800,
-    height: 600,
+  listado = new BrowserWindow({
+    width: 600,
+    height: 700,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      preload: path.join(app.getAppPath(), 'preload.js')
     }
   })
 
   // and load the index.html of the app.
-  segunda.loadFile('index2.html')
+  listado.loadFile('listado.html')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
 }
+
+let actualizarProducto
+function createWindowthree () {
+  // Create the browser window.
+  actualizarProducto = new BrowserWindow({
+    width: 600,
+    height: 700,
+    webPreferences: {
+      preload: path.join(app.getAppPath(), 'preload.js')
+    }
+  })
+
+  // and load the index.html of the app.
+  actualizarProducto.loadFile('actualizar.html')
+
+  // Open the DevTools.
+  // mainWindow.webContents.openDevTools()
+}
+
+let pedidos
+function createWindowfour () {
+  // Create the browser window.
+  pedidos = new BrowserWindow({
+    width: 600,
+    height: 700,
+    webPreferences: {
+      preload: path.join(app.getAppPath(), 'preload.js')
+    }
+  })
+
+  // and load the index.html of the app.
+  pedidos.loadFile('pedidos.html')
+
+  // Open the DevTools.
+  // mainWindow.webContents.openDevTools()
+}
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -61,11 +97,26 @@ app.on('window-all-closed', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 
-
 ipcMain.on('inicio-sesion',(event,args)=>{
   //console.log(args)
   createWindowtwo();
-  segunda.webContents.on('did-finish-load', ()=>{
-    segunda.webContents.send('bienvenido-usuario',args)
+  listado.webContents.on('did-finish-load', ()=>{
+    listado.webContents.send('listado-inventario',args)
+  })
+})
+
+ipcMain.on('listado-inventario',(event,args)=>{
+  //console.log(args)
+  createWindowthree();
+  actualizarProducto.webContents.on('did-finish-load', ()=>{
+    actualizarProducto.webContents.send('actualizar-producto',args)
+  })
+})
+
+ipcMain.on('listado',(event,args)=>{
+  //console.log(args)
+  createWindowfour();
+  pedidos.webContents.on('did-finish-load', ()=>{
+    pedidos.webContents.send('pedidos',args)
   })
 })

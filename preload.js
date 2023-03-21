@@ -11,7 +11,21 @@ contextBridge.exposeInMainWorld(
   'comunicacion',
   {
     inicioUsuario: (usuario) => ipcRenderer.send('inicio-sesion', usuario),
-    bienvenidoUsuario: (canal, callback) =>ipcRenderer.on('bienvenido-usuario',callback) 
+    listadoInventario: (canal, callback) =>ipcRenderer.on('listado-inventario',callback)
+  }
+)
+contextBridge.exposeInMainWorld(
+  'envio',
+  {
+    listadoInventario: (producto) => ipcRenderer.send('listado-inventario', producto),
+    actualizarProducto: (canal, callback) =>ipcRenderer.on('actualizar-producto',callback)  
+  }
+)
+contextBridge.exposeInMainWorld(
+  'solicitudes',
+  {
+    listadoInventario: (producto) => ipcRenderer.send('listado', producto),
+    actualizarProducto: (canal, callback) =>ipcRenderer.on('pedidos',callback)  
   }
 )
 
